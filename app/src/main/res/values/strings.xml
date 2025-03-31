@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CityScope</string>
+    <string name="menu_title">Menu </string>
 </resources>

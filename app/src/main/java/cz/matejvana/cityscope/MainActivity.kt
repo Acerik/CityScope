@@ -10,38 +10,55 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import cz.matejvana.cityscope.data.MyObjectBox
+import cz.matejvana.cityscope.screen.NavigationDrawerMenu
 import cz.matejvana.cityscope.ui.theme.CityScopeTheme
+import io.objectbox.BoxStore
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var boxStore: BoxStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CityScopeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+                MainScreen(navController)
             }
         }
+
+        boxStore = MyObjectBox.builder()
+            .androidContext(this)
+            .name("cityscope")
+            .build()
+        val cityRepository = CityRepository(boxStore, this)
+        cityRepository.initializeData()
+        //todo fix reloading data on each start
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
+fun MainScreen(navController: NavHostController) {
+    Scaffold(
+        topBar = {
+            NavigationDrawerMenu(
+                content = {
+                    Text("Menutext", modifier = Modifier.padding(16.dp))
+                },
+                navController = navController
+            )
+        },
+        content = { paddingValues ->
+            Text(
+                "CityScope", modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+            )
+        }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CityScopeTheme {
-        Greeting("Android")
-    }
 }

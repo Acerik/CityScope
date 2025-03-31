@@ -1,0 +1,50 @@
+package cz.matejvana.cityscope
+
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import cz.matejvana.cityscope.data.City
+import cz.matejvana.cityscope.data.City_
+import io.objectbox.Box
+import io.objectbox.BoxStore
+import io.objectbox.query.QueryBuilder
+import java.io.InputStreamReader
+
+class CityRepository(private val boxStore: BoxStore, private val context: Context) {
+
+    private val cityBox: Box<City> = boxStore.boxFor(City::class.java)
+
+    fun initializeData() {
+        cityBox.removeAll()
+        if (cityBox.isEmpty) {
+            val cities: List<City> = loadCitiesFromJson()
+            println("Loaded ${cities.size} cities")
+            cityBox.put(cities)
+        }
+    }
+
+    private fun loadCitiesFromJson(): List<City> {
+        val inputStream = context.assets.open("cities.json")
+        val reader = InputStreamReader(inputStream)
+        val cityListType = object : TypeToken<List<City>>() {}.type
+        return Gson().fromJson(reader, cityListType)
+    }
+
+    fun getCityByName(name: String): City? {
+        val query = cityBox.query(City_.name.equal(name.lowercase(), QueryBuilder.StringOrder.CASE_INSENSITIVE)).build()
+        var city = query.findFirst()
+        query.close()
+        if (city == null) {
+            val aliasQuery = cityBox.query(
+                City_.aliases.containsElement(
+                    name.lowercase(),
+                    QueryBuilder.StringOrder.CASE_INSENSITIVE
+                )
+            ).build()
+            city = aliasQuery.findFirst()
+            aliasQuery.close()
+        }
+        return city
+    }
+
+}
