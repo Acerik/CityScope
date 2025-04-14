@@ -1,4 +1,4 @@
-package cz.matejvana.cityscope
+package cz.matejvana.cityscope.repository
 
 import android.content.Context
 import com.google.gson.Gson
@@ -57,6 +57,10 @@ class CityRepository(boxStore: BoxStore, private val context: Context) {
         val cities = query.find()
         query.close()
         return cities
+    }
+
+    fun getCityById(id: Long): City? {
+        return cityBox.get(id)
     }
 
 }

@@ -82,5 +82,12 @@ fun NavigationDrawerMenu(navController: NavHostController) {
 fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Routes.CITY_SEARCH) {
         composable(Routes.CITY_SEARCH) { CitySearchScreen(navController) }
+        composable(Routes.getCityDetailRoute("{cityId}")) {
+            val cityId = it.arguments?.getString("cityId")
+            if (cityId != null) {
+                CityDetailScreen(navController, cityId.toLong())
+            }
+            //todo handle else
+        }
     }
 }
