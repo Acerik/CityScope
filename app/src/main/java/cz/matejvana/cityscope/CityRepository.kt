@@ -10,11 +10,15 @@ import io.objectbox.BoxStore
 import io.objectbox.query.QueryBuilder
 import java.io.InputStreamReader
 
-class CityRepository(private val boxStore: BoxStore, private val context: Context) {
+class CityRepository(boxStore: BoxStore, private val context: Context) {
 
     private val cityBox: Box<City> = boxStore.boxFor(City::class.java)
 
-    fun initializeData() {
+    init {
+        initializeData()
+    }
+
+    private fun initializeData() {
         cityBox.removeAll()
         if (cityBox.isEmpty) {
             val cities: List<City> = loadCitiesFromJson()
@@ -45,6 +49,14 @@ class CityRepository(private val boxStore: BoxStore, private val context: Contex
             aliasQuery.close()
         }
         return city
+    }
+
+    fun getCitiesByName(name: String): List<City> {
+        val query =
+            cityBox.query(City_.name.contains(name.lowercase(), QueryBuilder.StringOrder.CASE_INSENSITIVE)).build()
+        val cities = query.find()
+        query.close()
+        return cities
     }
 
 }
