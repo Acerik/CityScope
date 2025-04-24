@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import cz.matejvana.cityscope.data.CountryCurrency
 import cz.matejvana.cityscope.data.CountryCurrency_
+import cz.matejvana.cityscope.data.CurrencyInfo
 import io.objectbox.Box
 import io.objectbox.BoxStore
 import java.io.InputStreamReader
@@ -38,5 +39,23 @@ class CountryCurrencyRepository(boxStore: BoxStore, private val context: Context
         val currency = query.findFirst()
         query.close()
         return currency
+    }
+
+    fun getAllCurrencyCodes(): List<CurrencyInfo> {
+        return cityBox.all
+            .flatMap { it.currencies }
+            .mapNotNull { it }
+            .sortedBy { currencyInfo -> currencyInfo.name }
+            .distinct()
+    }
+
+    fun getCurrencyInfoByCode(currencyCode: String): CurrencyInfo {
+        return getAllCurrencyCodes()
+            .firstOrNull { it.code == currencyCode }
+            ?: CurrencyInfo(
+                code = currencyCode,
+                name = "Unknown",
+                symbol = currencyCode
+            )
     }
 }

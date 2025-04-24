@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         }
         startKoin {
             androidContext(this@MainActivity)
-            modules(repositoryModule, objectBoxModule, viewModelModule)
+            modules(repositoryModule, objectBoxModule, viewModelModule, networkModule)
         }
     }
 }

@@ -18,12 +18,6 @@ data class CountryCurrency(
     var currencies: List<CurrencyInfo> = emptyList()
 )
 
-data class CurrencyInfo(
-    val code: String?,
-    val name: String?,
-    val symbol: String?
-)
-
 class CurrencyListConverter : PropertyConverter<List<CurrencyInfo>, String> {
     private val gson = Gson()
     private val type = object : TypeToken<List<CurrencyInfo>>() {}.type

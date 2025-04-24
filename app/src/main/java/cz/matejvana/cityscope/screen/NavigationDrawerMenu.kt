@@ -1,8 +1,10 @@
 package cz.matejvana.cityscope.screen
 
+import SettingsScreen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,6 +45,18 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                                 drawerState.close()
                             }
                             navController.navigate(Routes.CITY_SEARCH)
+                        }
+                    )
+                    Spacer(Modifier.height(10.dp))
+                    NavigationDrawerItem(
+                        label = { Text(stringResource(R.string.menu_settings)) },
+                        icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
+                        selected = false,
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            navController.navigate(Routes.SETTINGS)
                         }
                     )
                 }
@@ -89,5 +103,6 @@ fun Navigation(navController: NavHostController) {
             }
             //todo handle else
         }
+        composable(Routes.SETTINGS) { SettingsScreen(navController) }
     }
 }

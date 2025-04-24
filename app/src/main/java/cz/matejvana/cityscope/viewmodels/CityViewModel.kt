@@ -3,6 +3,7 @@ package cz.matejvana.cityscope.viewmodels
 import androidx.lifecycle.ViewModel
 import cz.matejvana.cityscope.data.City
 import cz.matejvana.cityscope.data.CountryCurrency
+import cz.matejvana.cityscope.data.CurrencyInfo
 import cz.matejvana.cityscope.repository.CityRepository
 import cz.matejvana.cityscope.repository.CountryCurrencyRepository
 
@@ -27,5 +28,9 @@ class CityViewModel(
 
     fun getCurrencyByCity(city: City): CountryCurrency {
         return countryCurrencyRepository.getCurrencyByCountryCode(city.country) ?: CountryCurrency()
+    }
+
+    fun getAllCurrencyCodes(): List<CurrencyInfo> {
+        return countryCurrencyRepository.getAllCurrencyCodes()
     }
 }
