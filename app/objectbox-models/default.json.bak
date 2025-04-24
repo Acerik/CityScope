@@ -9,11 +9,6 @@
       "name": "City",
       "properties": [
         {
-          "id": "1:7394418396475161872",
-          "name": "id",
-          "type": 6
-        },
-        {
           "id": "2:2808763064973449938",
           "name": "name",
           "type": 9
@@ -66,7 +61,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    7394418396475161872
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

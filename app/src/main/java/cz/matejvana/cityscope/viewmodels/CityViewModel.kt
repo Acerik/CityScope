@@ -2,9 +2,14 @@ package cz.matejvana.cityscope.viewmodels
 
 import androidx.lifecycle.ViewModel
 import cz.matejvana.cityscope.data.City
+import cz.matejvana.cityscope.data.CountryCurrency
 import cz.matejvana.cityscope.repository.CityRepository
+import cz.matejvana.cityscope.repository.CountryCurrencyRepository
 
-class CityViewModel(private val cityRepository: CityRepository) : ViewModel() {
+class CityViewModel(
+    private val cityRepository: CityRepository,
+    private val countryCurrencyRepository: CountryCurrencyRepository
+) : ViewModel() {
 
     fun searchCityByName(name: String): City? {
         return cityRepository.getCityByName(name)
@@ -18,5 +23,9 @@ class CityViewModel(private val cityRepository: CityRepository) : ViewModel() {
 
     fun getCityById(id: Long): City? {
         return cityRepository.getCityById(id)
+    }
+
+    fun getCurrencyByCity(city: City): CountryCurrency {
+        return countryCurrencyRepository.getCurrencyByCountryCode(city.country) ?: CountryCurrency()
     }
 }

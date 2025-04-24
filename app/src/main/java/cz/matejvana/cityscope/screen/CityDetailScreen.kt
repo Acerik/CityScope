@@ -17,13 +17,18 @@ import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun CityDetailScreen(navController: NavController, cityId: Long, cityViewModel: CityViewModel = koinViewModel()) {
+fun CityDetailScreen(
+    navController: NavController,
+    cityId: Long,
+    cityViewModel: CityViewModel = koinViewModel()
+) {
     //todo implement detail screen
     // implementation should have all city infromation
     // add currency exchange
     // add weather
     // add map
     val city by remember { mutableStateOf(cityViewModel.getCityById(cityId)) }
+    val countryCurrency by remember { mutableStateOf(cityViewModel.getCurrencyByCity(city!!)) }
 
     if (city != null) {
         Column(
@@ -43,6 +48,11 @@ fun CityDetailScreen(navController: NavController, cityId: Long, cityViewModel: 
             )
             Text(
                 text = "Population: ${city?.population}",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "Currency: ${countryCurrency.currencies.joinToString(", ") { it.name ?: "Unknown" }}",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
