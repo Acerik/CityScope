@@ -79,4 +79,7 @@ dependencies {
 
     implementation("io.objectbox:objectbox-android:4.2.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //map osmodroid
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
 }

@@ -104,5 +104,13 @@ fun Navigation(navController: NavHostController) {
             //todo handle else
         }
         composable(Routes.SETTINGS) { SettingsScreen(navController) }
+        composable(
+            Routes.getMapRoute("{cityName}", "{latitude}", "{longitude}")
+        ) {
+            val cityName = it.arguments?.getString("cityName") ?: "Unknown"
+            val latitude = it.arguments?.getString("latitude")?.toDoubleOrNull() ?: 0.0
+            val longitude = it.arguments?.getString("longitude")?.toDoubleOrNull() ?: 0.0
+            MapScreen(navController, cityName, latitude, longitude)
+        }
     }
 }

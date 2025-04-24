@@ -3,6 +3,7 @@ package cz.matejvana.cityscope.screen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -10,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cz.matejvana.cityscope.api.ApiResult
+import cz.matejvana.cityscope.const.Routes
 import cz.matejvana.cityscope.repository.CurrencyRate
 import cz.matejvana.cityscope.viewmodels.CityViewModel
 import cz.matejvana.cityscope.viewmodels.CurrencyExchangeViewModel
 import cz.matejvana.cityscope.viewmodels.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun CityDetailScreen(
@@ -27,7 +28,6 @@ fun CityDetailScreen(
 ) {
     //todo implement detail screen
     // implementation should have all city infromation
-    // add currency exchange
     // add weather
     // add map
     val city by remember { mutableStateOf(cityViewModel.getCityById(cityId)) }
@@ -102,6 +102,16 @@ fun CityDetailScreen(
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
+            }
+            Button(
+                onClick = {
+                    navController.navigate(
+                        Routes.getMapRoute("${city?.name}", "${city?.latitude}", "${city?.longitude}")
+                    )
+                },
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text("Show Map")
             }
         }
     } else {
