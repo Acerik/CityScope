@@ -5,4 +5,25 @@
     <string name="menu_search_city">Search city</string>
     <string name="search">Search</string>
     <string name="menu_settings">Settings</string>
+    <string name="city_detail_title">City: %s</string>
+    <string name="city_detail_population">Population: %s</string>
+    <string name="city_detail_timezone">Timezone: %s</string>
+    <string name="city_detail_current_time">Current time: %s</string>
+    <string name="city_detail_currency">Currency: %s</string>
+    <string name="city_detail_current_weather">Current weather</string>
+    <string name="city_detail_temperature">Temperature: %s°C (%s°F)</string>
+    <string name="city_detail_feels_like">Feels like: %s°C</string>
+    <string name="city_detail_condition">Condition: %s</string>
+    <string name="city_detail_wind">Wind: %s km/h (%s)</string>
+    <string name="city_detail_pressure">Pressure: %s</string>
+    <string name="city_detail_humidity">Humidity: %s</string>
+    <string name="city_detail_precipitation">Precipitation: %s mm</string>
+    <string name="city_detail_cloudiness">Cloudiness: %s</string>
+    <string name="city_detail_last_updated">Last updated: %s</string>
+    <string name="city_detail_exchange_rate_loading">Exchange Rate: Loading...</string>
+    <string name="city_detail_exchange_rate_error">Exchange Rate: Error loading data</string>
+    <string name="city_detail_exchange_rate">Exchange Rate: 1%s(%s) = %s%s(%s)</string>
+    <string name="city_detail_weather_loading">Weather: Loading...</string>
+    <string name="city_detail_weather_error">Weather: Error loading data</string>
+    <string name="city_detail_show_map">Show on map</string>
 </resources>

@@ -67,7 +67,7 @@ fun NavigationDrawerMenu(navController: NavHostController) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("CityScope") },
+                    title = { Text(stringResource(R.string.app_name)) },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch {

@@ -4,12 +4,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cz.matejvana.cityscope.R
@@ -33,7 +36,13 @@ fun CitySearchScreen(navController: NavController, viewModel: CityViewModel = ko
             value = searchQuery,
             onValueChange = { searchQuery = it },
             label = { Text(stringResource(R.string.enter_city_name_search)) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    searchResults = viewModel.searchCitiesByName(searchQuery)
+                }
+            )
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(
