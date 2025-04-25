@@ -10,21 +10,22 @@
     <string name="city_detail_population">Populace: %s</string>
     <string name="city_detail_timezone">Časové pásmo: %s</string>
     <string name="city_detail_current_time">Aktuální čas: %s</string>
+    <string name="city_detail_current_date">Aktuální datum: %s</string>
     <string name="city_detail_currency">Měna: %s</string>
     <string name="city_detail_current_weather">Aktuální počasí</string>
     <string name="city_detail_temperature">Teplota: %s°C (%s°F)</string>
-    <string name="city_detail_feels_like">Pocitová teplota: %s°C</string>
+    <string name="city_detail_feels_like">Pocitová teplota: %s°C (%s °F)</string>
     <string name="city_detail_condition">Podmínky: %s</string>
     <string name="city_detail_wind">Vítr: %s km/h (%s)</string>
     <string name="city_detail_pressure">Tlak: %s</string>
-    <string name="city_detail_humidity">Vlhkost: %s</string>
+    <string name="city_detail_humidity">Vlhkost: %s%%</string>
     <string name="city_detail_precipitation">Srážky: %s mm</string>
-    <string name="city_detail_cloudiness">Oblačnost: %s</string>
+    <string name="city_detail_cloudiness">Oblačnost: %s%%</string>
     <string name="city_detail_last_updated">Poslední aktualizace: %s</string>
     <string name="city_detail_exchange_rate_loading">Kurz: načítání</string>
     <string name="city_detail_exchange_rate_error">Kurz: chyba při načítání</string>
     <string name="city_detail_exchange_rate">Kurz: 1%s(%s) = %s%s(%s)</string>
     <string name="city_detail_weather_loading">Počasí: načítání</string>
     <string name="city_detail_weather_error">Počasí: chyba při načítání</string>
-    <string name="city_detail_show_map">Zobrazit na mapě.</string>
+    <string name="city_detail_show_map">Zobrazit na mapě</string>
 </resources>

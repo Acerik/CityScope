@@ -3,6 +3,7 @@ package cz.matejvana.cityscope.screen
 import SettingsScreen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.const.Routes
 import kotlinx.coroutines.launch
@@ -23,8 +25,11 @@ import kotlinx.coroutines.launch
 fun NavigationDrawerMenu(navController: NavHostController) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val gestureEnabled = !(Routes.isMap(currentRoute) || Routes.isCityDetail(currentRoute))
 
     ModalNavigationDrawer(
+        gesturesEnabled = gestureEnabled,
         drawerContent = {
             ModalDrawerSheet {
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -66,22 +71,33 @@ fun NavigationDrawerMenu(navController: NavHostController) {
     ) {
         Scaffold(
             topBar = {
-                TopAppBar(
-                    title = { Text(stringResource(R.string.app_name)) },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                if (drawerState.isClosed) {
-                                    drawerState.open()
-                                } else {
-                                    drawerState.close()
-                                }
+                if (Routes.isMap(currentRoute) || Routes.isCityDetail(currentRoute)) {
+                    TopAppBar(
+                        title = { Text(stringResource(R.string.app_name)) },
+                        navigationIcon = {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
                             }
-                        }) {
-                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
                         }
-                    }
-                )
+                    )
+                } else {
+                    TopAppBar(
+                        title = { Text(stringResource(R.string.app_name)) },
+                        navigationIcon = {
+                            IconButton(onClick = {
+                                scope.launch {
+                                    if (drawerState.isClosed) {
+                                        drawerState.open()
+                                    } else {
+                                        drawerState.close()
+                                    }
+                                }
+                            }) {
+                                Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                            }
+                        }
+                    )
+                }
             },
             content = { paddingValues ->
                 Box(modifier = Modifier.padding(paddingValues)) {

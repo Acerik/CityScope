@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
@@ -56,19 +57,42 @@ fun CitySearchScreen(navController: NavController, viewModel: CityViewModel = ko
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(searchResults) { city ->
-                //todo implement city item
-                // For now, just display the city name
-                // In a real app, you would navigate to the city detail screen
-                // when the item is clicked
-                // item format should be
-                // |CityName       CountryFlag| ???
-                Text(
-                    text = CityMapper.getDisplayName(city),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clickable { navController.navigate(Routes.getCityDetailRoute(city.entityId.toString())) }
-                )
+                CitySearchItem(city, navController)
             }
         }
     }
+}
+
+@Composable
+fun CitySearchItem(city: City, navController: NavController) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { navController.navigate(Routes.getCityDetailRoute(city.entityId.toString())) }
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column {
+            Text(
+                text = CityMapper.getDisplayName(city),
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Text(
+                text = stringResource(R.string.city_detail_population, city.population),
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        Text(
+            text = "${getFlagEmoji(city.country)} ${city.country}",
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+fun getFlagEmoji(countryCode: String): String {
+    if (countryCode.length != 2) return ""
+    val uppercaseCode = countryCode.uppercase()
+    val firstChar = uppercaseCode[0] - 'A' + 0x1F1E6
+    val secondChar = uppercaseCode[1] - 'A' + 0x1F1E6
+    return String(intArrayOf(firstChar, secondChar), 0, 2)
 }

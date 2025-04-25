@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -101,6 +102,16 @@ fun CityDetailScreen(
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
+                    Text(
+                        text = stringResource(
+                            R.string.city_detail_current_date, "${
+                                ZonedDateTime.now(ZoneId.of(city?.timezone ?: "UTC")).toLocalDate()
+                                    .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                            }"
+                        ),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
                 }
                 Text(
                     text = stringResource(
@@ -167,7 +178,8 @@ fun CityDetailScreen(
                         Text(
                             text = stringResource(
                                 R.string.city_detail_feels_like,
-                                String.format("%.1f", weatherData.current.feelslike_c)
+                                String.format("%.1f", weatherData.current.feelslike_c),
+                                String.format("%.1f", weatherData.current.feelslike_f)
                             ),
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(bottom = 8.dp)
@@ -255,6 +267,7 @@ fun CityDetailScreen(
                     )
                 },
                 modifier = Modifier.padding(top = 16.dp)
+                    .align(Alignment.CenterHorizontally)
             ) {
                 Text(stringResource(R.string.city_detail_show_map))
             }

@@ -52,11 +52,18 @@ class CityRepository(boxStore: BoxStore, private val context: Context) {
     }
 
     fun getCitiesByName(name: String): List<City> {
-        val query =
+        val nameQuery =
             cityBox.query(City_.name.contains(name.lowercase(), QueryBuilder.StringOrder.CASE_INSENSITIVE)).build()
-        val cities = query.find()
-        query.close()
+        val aliasQuery =
+            cityBox.query(City_.aliases.contains(name.lowercase(), QueryBuilder.StringOrder.CASE_INSENSITIVE)).build()
+        val cities = (nameQuery.find() + aliasQuery.find()).distinctBy { it.entityId }
+
+        nameQuery.close()
+        aliasQuery.close()
+
         return cities
+            .sortedBy { it.population }
+            .reversed()
     }
 
     fun getCityById(id: Long): City? {

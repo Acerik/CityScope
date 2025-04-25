@@ -14,4 +14,12 @@ object Routes {
     fun getMapRoute(cityName: String, latitude: String, longitude: String): String {
         return "$MAP_SCREEN/$cityName/$latitude/$longitude"
     }
+
+    fun isCityDetail(route: String?): Boolean {
+        return route?.startsWith("cityDetail/") == true
+    }
+
+    fun isMap(route: String?): Boolean {
+        return route?.startsWith(MAP_SCREEN) == true
+    }
 }
