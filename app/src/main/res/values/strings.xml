@@ -27,4 +27,5 @@
     <string name="city_detail_weather_loading">Weather: Loading...</string>
     <string name="city_detail_weather_error">Weather: Error loading data</string>
     <string name="city_detail_show_map">Show on map</string>
+    <string name="city_search_last_seen">Last seen</string>
 </resources>

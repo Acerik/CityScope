@@ -18,6 +18,10 @@ class CityRepository(boxStore: BoxStore, private val context: Context) {
         initializeData()
     }
 
+    fun getCitiesByIds(ids: List<Long>): List<City> {
+        return cityBox.get(ids)
+    }
+
     private fun initializeData() {
         cityBox.removeAll()
         if (cityBox.isEmpty) {

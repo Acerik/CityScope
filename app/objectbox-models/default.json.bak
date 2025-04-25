@@ -51,9 +51,33 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:818755973323857634",
+      "lastPropertyId": "3:5421471723202773174",
+      "name": "CountryCurrency",
+      "properties": [
+        {
+          "id": "1:7879842014044777115",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:115252309761784298",
+          "name": "countryCode",
+          "type": 9
+        },
+        {
+          "id": "3:5421471723202773174",
+          "name": "currencies",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:6590209197515072152",
+  "lastEntityId": "2:818755973323857634",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

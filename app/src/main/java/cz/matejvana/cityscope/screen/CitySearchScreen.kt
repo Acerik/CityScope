@@ -60,15 +60,30 @@ fun CitySearchScreen(navController: NavController, viewModel: CityViewModel = ko
                 CitySearchItem(city, navController)
             }
         }
+        if (searchResults.isEmpty()) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = stringResource(R.string.city_search_last_seen),
+                style = MaterialTheme.typography.bodyLarge
+            )
+            LazyColumn {
+                items(viewModel.getRecentSearches()) { city ->
+                    CitySearchItem(city, navController)
+                }
+            }
+        }
     }
 }
 
 @Composable
-fun CitySearchItem(city: City, navController: NavController) {
+fun CitySearchItem(city: City, navController: NavController, cityViewModel: CityViewModel = koinViewModel()) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { navController.navigate(Routes.getCityDetailRoute(city.entityId.toString())) }
+            .clickable {
+                cityViewModel.addRecentSearch(city)
+                navController.navigate(Routes.getCityDetailRoute(city.entityId.toString()))
+            }
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

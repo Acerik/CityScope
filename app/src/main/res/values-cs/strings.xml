@@ -28,4 +28,5 @@
     <string name="city_detail_weather_loading">Počasí: načítání</string>
     <string name="city_detail_weather_error">Počasí: chyba při načítání</string>
     <string name="city_detail_show_map">Zobrazit na mapě</string>
+    <string name="city_search_last_seen">Poslední zobrazené</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                     Spacer(Modifier.height(10.dp))
                     NavigationDrawerItem(
                         label = { Text(stringResource(R.string.menu_search_city)) },
-                        icon = { Icon(Icons.Filled.Menu, contentDescription = null) },
+                        icon = { Icon(Icons.Filled.Search, contentDescription = null) },
                         selected = false,
                         onClick = {
                             scope.launch {

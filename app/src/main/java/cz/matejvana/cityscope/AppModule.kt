@@ -10,6 +10,7 @@ import cz.matejvana.cityscope.api.WeatherApi
 import cz.matejvana.cityscope.data.City
 import cz.matejvana.cityscope.data.CountryCurrency
 import cz.matejvana.cityscope.data.MyObjectBox
+import cz.matejvana.cityscope.data.RecentCity
 import cz.matejvana.cityscope.repository.*
 import cz.matejvana.cityscope.viewmodels.CityViewModel
 import cz.matejvana.cityscope.viewmodels.CurrencyExchangeViewModel
@@ -37,6 +38,7 @@ val repositoryModule = module {
     single { SettingsRepository(get()) }
     single { CurrencyExchangeRepository(get()) }
     single { WeatherRepository(get()) }
+    single { RecentSearchRepository(get()) }
 }
 
 val objectBoxModule = module {
@@ -48,10 +50,11 @@ val objectBoxModule = module {
     }
     single { get<BoxStore>().boxFor(City::class.java) }
     single { get<BoxStore>().boxFor(CountryCurrency::class.java) }
+    single { get<BoxStore>().boxFor(RecentCity::class.java) }
 }
 
 val viewModelModule = module {
-    single { CityViewModel(get(), get()) }
+    single { CityViewModel(get(), get(), get()) }
     single { SettingsViewModel(get(), get()) }
     single { CurrencyExchangeViewModel(get(), get()) }
     single { WeatherViewModel(get()) }

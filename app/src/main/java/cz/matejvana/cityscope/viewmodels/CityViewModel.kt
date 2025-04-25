@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import cz.matejvana.cityscope.data.City
 import cz.matejvana.cityscope.data.CountryCurrency
 import cz.matejvana.cityscope.data.CurrencyInfo
+import cz.matejvana.cityscope.data.RecentCity
 import cz.matejvana.cityscope.repository.CityRepository
 import cz.matejvana.cityscope.repository.CountryCurrencyRepository
+import cz.matejvana.cityscope.repository.RecentSearchRepository
 
 class CityViewModel(
     private val cityRepository: CityRepository,
-    private val countryCurrencyRepository: CountryCurrencyRepository
+    private val countryCurrencyRepository: CountryCurrencyRepository,
+    private val recentSearchRepository: RecentSearchRepository
 ) : ViewModel() {
 
     fun searchCityByName(name: String): City? {
@@ -17,8 +20,6 @@ class CityViewModel(
     }
 
     fun searchCitiesByName(name: String): List<City> {
-        //todo enchance this method to search by alias
-        // seach by alias should be done when search is empty ???
         return cityRepository.getCitiesByName(name)
     }
 
@@ -32,5 +33,13 @@ class CityViewModel(
 
     fun getAllCurrencyCodes(): List<CurrencyInfo> {
         return countryCurrencyRepository.getAllCurrencyCodes()
+    }
+
+    fun getRecentSearches(): List<City> {
+        return cityRepository.getCitiesByIds(recentSearchRepository.getRecentSearches().map { it.cityId }.toList())
+    }
+
+    fun addRecentSearch(city: City) {
+        recentSearchRepository.addSearch(RecentCity(cityId = city.entityId))
     }
 }
