@@ -2,8 +2,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.viewmodels.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -12,7 +14,13 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
     val preferredCurrencyCode by settingsViewModel.preferredCurrencyCode.collectAsState()
     val allCurrencyCodes = remember { settingsViewModel.getAllCurrencyCodes() }
     var expanded by remember { mutableStateOf(false) }
-    var selectedCurrency by remember { mutableStateOf(preferredCurrencyCode ?: "") }
+    var selectedCurrency by remember { mutableStateOf("") }
+
+    LaunchedEffect(preferredCurrencyCode) {
+        selectedCurrency = preferredCurrencyCode ?: ""
+    }
+
+    //todo need to fix saving currency code
 
     Column(
         modifier = Modifier
@@ -20,7 +28,7 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
             .padding(16.dp)
     ) {
         Text(
-            text = "Select Default Currency",
+            text = stringResource(R.string.settings_select_currency_title),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -30,7 +38,7 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
                 onClick = { expanded = true },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = if (selectedCurrency.isNotEmpty()) selectedCurrency else "Choose Currency")
+                Text(text = if (selectedCurrency.isNotEmpty()) selectedCurrency else stringResource(R.string.settings_select_currency))
             }
 
             DropdownMenu(
@@ -56,7 +64,7 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
             onClick = { navController.popBackStack() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Save and Go Back")
+            Text(text = stringResource(R.string.settings_save_back))
         }
     }
 }

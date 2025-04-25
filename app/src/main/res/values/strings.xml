@@ -28,4 +28,7 @@
     <string name="city_detail_weather_error">Weather: Error loading data</string>
     <string name="city_detail_show_map">Show on map</string>
     <string name="city_search_last_seen">Last seen</string>
+    <string name="settings_select_currency">Choose currency</string>
+    <string name="settings_select_currency_title">Select default currency</string>
+    <string name="settings_save_back">Save and go back</string>
 </resources>

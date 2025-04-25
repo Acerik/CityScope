@@ -29,4 +29,7 @@
     <string name="city_detail_weather_error">Počasí: chyba při načítání</string>
     <string name="city_detail_show_map">Zobrazit na mapě</string>
     <string name="city_search_last_seen">Poslední zobrazené</string>
+    <string name="settings_select_currency">Vyberte měnu</string>
+    <string name="settings_select_currency_title">Vyberte výchozí měnu</string>
+    <string name="settings_save_back">Uložit a zpět</string>
 </resources>
