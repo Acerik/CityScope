@@ -12,18 +12,18 @@ import java.io.InputStreamReader
 
 class CountryCurrencyRepository(boxStore: BoxStore, private val context: Context) {
 
-    private val cityBox: Box<CountryCurrency> = boxStore.boxFor(CountryCurrency::class.java)
+    private val countryCurrencyBox: Box<CountryCurrency> = boxStore.boxFor(CountryCurrency::class.java)
 
     init {
         initializeData()
     }
 
     private fun initializeData() {
-        cityBox.removeAll()
-        if (cityBox.isEmpty) {
+        countryCurrencyBox.removeAll()
+        if (countryCurrencyBox.isEmpty) {
             val currencies: List<CountryCurrency> = loadCountryCurrenciesFromJson()
             println("Loaded ${currencies.size} currencies")
-            cityBox.put(currencies)
+            countryCurrencyBox.put(currencies)
         }
     }
 
@@ -35,14 +35,14 @@ class CountryCurrencyRepository(boxStore: BoxStore, private val context: Context
     }
 
     fun getCurrencyByCountryCode(countryCode: String): CountryCurrency? {
-        val query = cityBox.query(CountryCurrency_.countryCode.equal(countryCode)).build()
+        val query = countryCurrencyBox.query(CountryCurrency_.countryCode.equal(countryCode)).build()
         val currency = query.findFirst()
         query.close()
         return currency
     }
 
     fun getAllCurrencyCodes(): List<CurrencyInfo> {
-        return cityBox.all
+        return countryCurrencyBox.all
             .flatMap { it.currencies }
             .mapNotNull { it }
             .sortedBy { currencyInfo -> currencyInfo.name }

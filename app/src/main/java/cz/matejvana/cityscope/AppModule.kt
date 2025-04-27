@@ -1,9 +1,5 @@
 package cz.matejvana.cityscope
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStoreFile
 import cz.matejvana.cityscope.api.ApiKeys
 import cz.matejvana.cityscope.api.CurrencyExchangeApi
 import cz.matejvana.cityscope.api.WeatherApi
@@ -24,11 +20,6 @@ import java.io.File
 val repositoryModule = module {
     single { CityRepository(get(), get()) }
     single { CountryCurrencyRepository(get(), get()) }
-    single<DataStore<Preferences>> {
-        PreferenceDataStoreFactory.create(
-            produceFile = { androidContext().preferencesDataStoreFile("settings") }
-        )
-    }
     single { SettingsRepository(get()) }
     single { CurrencyExchangeRepository(get()) }
     single { WeatherRepository(get()) }
@@ -42,7 +33,9 @@ val objectBoxModule = module {
         MyObjectBox.builder()
             .androidContext(androidContext())
             .name("cityscope")
-            .build()
+            .build().also {
+                println("BoxStore created")
+            }
     }
     single { get<BoxStore>().boxFor(City::class.java) }
     single { get<BoxStore>().boxFor(CountryCurrency::class.java) }
