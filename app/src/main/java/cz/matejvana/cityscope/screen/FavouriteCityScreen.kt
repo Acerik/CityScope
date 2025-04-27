@@ -1,5 +1,6 @@
 package cz.matejvana.cityscope.screen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,16 +25,19 @@ fun FavouriteCityScreen(
 
     val favouriteCities = favouriteCityViewModel.getAllFavouriteCities()
 
-    Text(
-        text = stringResource(R.string.menu_favourites),
-        style = MaterialTheme.typography.titleLarge,
-        modifier = Modifier.padding(16.dp)
-            .fillMaxWidth(),
-        textAlign = TextAlign.Center
-    )
-    LazyColumn {
-        items(favouriteCities) { city ->
-            CityListItem(city, navController)
+    Column {
+        Text(
+            text = stringResource(R.string.menu_favourites),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        LazyColumn {
+            items(favouriteCities) { city ->
+                CityListItem(city, navController)
+            }
         }
     }
 }

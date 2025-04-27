@@ -48,7 +48,7 @@ class CityViewModel(
     fun getAllCurrencyCodes(): List<CurrencyInfo> {
         return countryCurrencyRepository.getAllCurrencyCodes()
     }
-    
+
     fun addRecentSearch(city: City) {
         recentSearchRepository.addSearch(RecentCity(cityId = city.entityId))
         loadRecentSearches()
