@@ -1,4 +1,4 @@
-package cz.matejvana.cityscope.screen
+package cz.matejvana.cityscope.screen.city
 
 import android.os.Build
 import androidx.compose.foundation.layout.Column
@@ -18,10 +18,10 @@ import androidx.navigation.NavController
 import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.api.ApiResult
 import cz.matejvana.cityscope.const.Routes
-import cz.matejvana.cityscope.repository.CurrencyRate
+import cz.matejvana.cityscope.mapper.CurrencyMapper
+import cz.matejvana.cityscope.screen.ExchangeRateText
 import cz.matejvana.cityscope.viewmodels.CityViewModel
-import cz.matejvana.cityscope.viewmodels.CurrencyExchangeViewModel
-import cz.matejvana.cityscope.viewmodels.SettingsViewModel
+import cz.matejvana.cityscope.viewmodels.CountryViewModel
 import cz.matejvana.cityscope.viewmodels.WeatherViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.time.ZoneId
@@ -33,34 +33,19 @@ fun CityDetailScreen(
     navController: NavController,
     cityId: Long,
     cityViewModel: CityViewModel = koinViewModel(),
-    currencyExchangeViewModel: CurrencyExchangeViewModel = koinViewModel(),
-    settingsViewModel: SettingsViewModel = koinViewModel(),
+    countryViewModel: CountryViewModel = koinViewModel(),
     weatherViewModel: WeatherViewModel = koinViewModel()
 ) {
-    //todo implement detail screen
-    // implementation should have all city infromation
 
     val city by remember { mutableStateOf(cityViewModel.getCityById(cityId)) }
     val countryCurrency by remember { mutableStateOf(cityViewModel.getCurrencyByCity(city!!)) }
-    val currencyExchange by currencyExchangeViewModel.currencyRates.collectAsState()
-    val preferredCurrencyCode by settingsViewModel.preferredCurrencyCode.collectAsState()
 
-    LaunchedEffect(preferredCurrencyCode, city) {
-        currencyExchangeViewModel.fetchCurrencyRates(preferredCurrencyCode ?: "eur")
+
+    LaunchedEffect(city) {
         weatherViewModel.getWeather(city!!.name)
     }
 
     if (city != null) {
-        val currencyCode = countryCurrency.currencies.firstOrNull()?.code ?: "eur"
-        val exchangeRate = when (currencyExchange) {
-            is ApiResult.Success -> {
-                (currencyExchange as ApiResult.Success<List<CurrencyRate>>).data
-                    .find { it.code.equals(currencyCode, ignoreCase = true) }?.value
-            }
-
-            else -> null
-        }
-        val currentCurrencyInfo = settingsViewModel.getCurrencyInfoByCode(preferredCurrencyCode ?: "eur")
         val weather = weatherViewModel.weather.collectAsState().value
 
         Column(
@@ -114,45 +99,11 @@ fun CityDetailScreen(
                     )
                 }
                 Text(
-                    text = stringResource(
-                        R.string.city_detail_currency,
-                        "${countryCurrency.currencies.joinToString(", ") { it.name + "(${it.symbol})" ?: "Unknown" }}"
-                    ),
+                    text = CurrencyMapper.mapCurrencyInfoForDisplay(countryCurrency),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
-                when (currencyExchange) {
-                    is ApiResult.Loading -> {
-                        Text(
-                            text = stringResource(R.string.city_detail_exchange_rate_loading),
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                    }
-
-                    is ApiResult.Success -> {
-                        Text(
-                            text = stringResource(
-                                R.string.city_detail_exchange_rate,
-                                currentCurrencyInfo.symbol,
-                                currentCurrencyInfo.code,
-                                String.format("%.2f", exchangeRate),
-                                countryCurrency.currencies.first().symbol,
-                                currencyCode
-                            ),
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                    }
-
-                    is ApiResult.Error -> {
-                        Text(
-                            text = stringResource(R.string.city_detail_exchange_rate_error),
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                    }
-                }
+                ExchangeRateText(countryCurrency)
             }
             when (weather) {
                 is ApiResult.Success -> {
@@ -270,6 +221,21 @@ fun CityDetailScreen(
                     .align(Alignment.CenterHorizontally)
             ) {
                 Text(stringResource(R.string.city_detail_show_map))
+            }
+            val countryId = if (!city?.country.isNullOrEmpty())
+                countryViewModel.getCountryIdByCode(city?.country!!).toString() else ""
+            if (countryId.isNotBlank()) {
+                Button(
+                    onClick = {
+                        navController.navigate(
+                            Routes.getCountryDetailRoute(countryId)
+                        )
+                    },
+                    modifier = Modifier.padding(top = 16.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
+                    Text(stringResource(R.string.city_detail_go_to_country))
+                }
             }
         }
     } else {

@@ -1,4 +1,4 @@
-package cz.matejvana.cityscope.screen
+package cz.matejvana.cityscope.screen.country
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
@@ -16,19 +15,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cz.matejvana.cityscope.R
-import cz.matejvana.cityscope.data.City
-import cz.matejvana.cityscope.viewmodels.CityViewModel
+import cz.matejvana.cityscope.data.Country
+import cz.matejvana.cityscope.viewmodels.CountryViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CitySearchScreen(
-    navController: NavController,
-    viewModel: CityViewModel = koinViewModel()
-) {
-    var searchQuery by remember { mutableStateOf("") }
-    var searchResults by remember { mutableStateOf(listOf<City>()) }
+fun CountrySearchScreen(navController: NavController, countryViewModel: CountryViewModel = koinViewModel()) {
 
-    val recentSearchCities by viewModel.recentSearches.collectAsState()
+    var searchQuery by remember { mutableStateOf("") }
+    var searchResults by remember { mutableStateOf(listOf<Country>()) }
 
     Column(
         modifier = Modifier
@@ -38,19 +33,19 @@ fun CitySearchScreen(
         TextField(
             value = searchQuery,
             onValueChange = { searchQuery = it },
-            label = { Text(stringResource(R.string.enter_city_name_search)) },
+            label = { Text(stringResource(R.string.enter_country_name_search)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
-                    searchResults = viewModel.searchCitiesByName(searchQuery)
+                    searchResults = countryViewModel.searchCountries(searchQuery)
                 }
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = {
-                searchResults = viewModel.searchCitiesByName(searchQuery)
+                searchResults = countryViewModel.searchCountries(searchQuery)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -58,26 +53,8 @@ fun CitySearchScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
-            items(searchResults) { city ->
-                CityListItem(
-                    city,
-                    navController
-                )
-            }
-        }
-        if (searchResults.isEmpty()) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = stringResource(R.string.city_search_last_seen),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            LazyColumn {
-                items(recentSearchCities) { city ->
-                    CityListItem(
-                        city,
-                        navController
-                    )
-                }
+            items(searchResults) { country ->
+                CountryListItem(navController, country)
             }
         }
     }

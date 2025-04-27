@@ -21,6 +21,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.const.Routes
+import cz.matejvana.cityscope.screen.city.CityDetailScreen
+import cz.matejvana.cityscope.screen.city.CitySearchScreen
+import cz.matejvana.cityscope.screen.city.FavouriteCityScreen
+import cz.matejvana.cityscope.screen.city.MapScreen
+import cz.matejvana.cityscope.screen.country.CountryDetailScreen
+import cz.matejvana.cityscope.screen.country.CountrySearchScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -59,6 +65,15 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                         label = stringResource(R.string.menu_favourites),
                         icon = Icons.Filled.Star,
                         route = Routes.FAVOURITE_CITIES
+                    )
+                    Spacer(Modifier.height(10.dp))
+                    MyMenuItem(
+                        scope = scope,
+                        drawerState = drawerState,
+                        navController = navController,
+                        label = stringResource(R.string.menu_search_country),
+                        icon = Icons.Filled.Search,
+                        route = Routes.COUNTRY_SEARCH
                     )
                     Spacer(Modifier.height(10.dp))
                     MyMenuItem(
@@ -156,6 +171,13 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Routes.FAVOURITE_CITIES) {
             FavouriteCityScreen(navController)
+        }
+        composable(Routes.COUNTRY_SEARCH) { CountrySearchScreen(navController) }
+        composable(Routes.getCountryDetailRoute("{countryId}")) {
+            val countryId = it.arguments?.getString("countryId")
+            if (countryId != null) {
+                CountryDetailScreen(navController, countryId.toLong())
+            }
         }
     }
 }

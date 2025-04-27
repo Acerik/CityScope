@@ -1,4 +1,4 @@
-package cz.matejvana.cityscope.screen
+package cz.matejvana.cityscope.screen.city
 
 import android.content.Context
 import androidx.compose.foundation.layout.Box

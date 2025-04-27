@@ -1,4 +1,4 @@
-package cz.matejvana.cityscope.screen
+package cz.matejvana.cityscope.screen.city
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -94,9 +94,127 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:7678590477651773881",
+      "lastPropertyId": "3:2478128177490273058",
+      "name": "FavouriteCity",
+      "properties": [
+        {
+          "id": "1:8586694108024016362",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3762646755029585053",
+          "name": "cityId",
+          "type": 6
+        },
+        {
+          "id": "3:2478128177490273058",
+          "name": "timestamp",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:3707861273292542065",
+      "lastPropertyId": "17:5461931235952521447",
+      "name": "Country",
+      "properties": [
+        {
+          "id": "1:4450565647250431785",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:9086597899794403831",
+          "name": "nameOfficial",
+          "type": 9
+        },
+        {
+          "id": "3:7178343707606034013",
+          "name": "nameCommon",
+          "type": 9
+        },
+        {
+          "id": "4:4362548607370791752",
+          "name": "countryCode",
+          "type": 9
+        },
+        {
+          "id": "5:2154270401055420004",
+          "name": "cioc",
+          "type": 9
+        },
+        {
+          "id": "6:3547411677475338363",
+          "name": "tld",
+          "type": 30
+        },
+        {
+          "id": "7:8468714015279281572",
+          "name": "capital",
+          "type": 30
+        },
+        {
+          "id": "8:1754651146257451324",
+          "name": "currencies",
+          "type": 9
+        },
+        {
+          "id": "9:731112191548563596",
+          "name": "region",
+          "type": 9
+        },
+        {
+          "id": "10:4380465903096080355",
+          "name": "subregion",
+          "type": 9
+        },
+        {
+          "id": "11:3464310623086828566",
+          "name": "latitude",
+          "type": 8
+        },
+        {
+          "id": "12:3465602316363286633",
+          "name": "longitude",
+          "type": 8
+        },
+        {
+          "id": "13:1249050360005044565",
+          "name": "borders",
+          "type": 30
+        },
+        {
+          "id": "14:9061922945771565714",
+          "name": "translations",
+          "type": 13
+        },
+        {
+          "id": "15:7382213341521265366",
+          "name": "area",
+          "type": 8
+        },
+        {
+          "id": "16:3005475390402884482",
+          "name": "population",
+          "type": 5
+        },
+        {
+          "id": "17:5461931235952521447",
+          "name": "carSide",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:2446732854418831212",
+  "lastEntityId": "5:3707861273292542065",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

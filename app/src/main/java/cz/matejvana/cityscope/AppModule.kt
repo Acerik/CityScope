@@ -34,6 +34,7 @@ val repositoryModule = module {
     single { WeatherRepository(get()) }
     single { RecentSearchRepository(get()) }
     single { FavouriteCityRepository(get()) }
+    single { CountryRepository(get(), get()) }
 }
 
 val objectBoxModule = module {
@@ -47,6 +48,7 @@ val objectBoxModule = module {
     single { get<BoxStore>().boxFor(CountryCurrency::class.java) }
     single { get<BoxStore>().boxFor(RecentCity::class.java) }
     single { get<BoxStore>().boxFor(FavouriteCity::class.java) }
+    single { get<BoxStore>().boxFor(Country::class.java) }
 }
 
 val viewModelModule = module {
@@ -55,6 +57,7 @@ val viewModelModule = module {
     single { CurrencyExchangeViewModel(get(), get()) }
     single { WeatherViewModel(get()) }
     single { FavouriteCityViewModel(get(), get()) }
+    single { CountryViewModel(get(), get()) }
 }
 
 val networkModule = module {

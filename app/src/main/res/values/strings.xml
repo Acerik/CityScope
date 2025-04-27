@@ -32,4 +32,16 @@
     <string name="settings_select_currency_title">Select default currency</string>
     <string name="settings_save_back">Save and go back</string>
     <string name="menu_favourites">Favourite cities</string>
+    <string name="enter_country_name_search">Enter country name</string>
+    <string name="menu_search_country">Search country</string>
+    <string name="country_detail_title">Country: %s</string>
+    <string name="country_detail_official_name">Official name: %s</string>
+    <string name="country_detail_common_name">Common name: %s</string>
+    <string name="country_detail_country_code">Country code: %s</string>
+    <string name="country_detail_population">Population: %s</string>
+    <string name="country_detail_area">Area: %s km²</string>
+    <string name="country_detail_region">Region: %s (%s)</string>
+    <string name="country_detail_capital">Capital city:</string>
+    <string name="country_detail_domain">Domain: %s</string>
+    <string name="city_detail_go_to_country">Go to country</string>
 </resources>

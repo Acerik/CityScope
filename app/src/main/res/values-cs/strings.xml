@@ -33,4 +33,16 @@
     <string name="settings_select_currency_title">Vyberte výchozí měnu</string>
     <string name="settings_save_back">Uložit a zpět</string>
     <string name="menu_favourites">Oblíbená města</string>
+    <string name="enter_country_name_search">Zadejte název země</string>
+    <string name="menu_search_country">Hledat zemi</string>
+    <string name="country_detail_title">Země: %s</string>
+    <string name="country_detail_official_name">Oficiální název: %s</string>
+    <string name="country_detail_common_name">Běžný název: %s</string>
+    <string name="country_detail_country_code">Kód země: %s</string>
+    <string name="country_detail_population">Populace: %s</string>
+    <string name="country_detail_area">Rozloha: %s km²</string>
+    <string name="country_detail_region">Region: %s (%s)</string>
+    <string name="country_detail_capital">Hlavní město: %s</string>
+    <string name="country_detail_domain">Doména: %s</string>
+    <string name="city_detail_go_to_country">Zobrazit zemi</string>
 </resources>
