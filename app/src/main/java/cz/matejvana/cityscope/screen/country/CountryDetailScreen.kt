@@ -18,6 +18,7 @@ import cz.matejvana.cityscope.getCurrentLocale
 import cz.matejvana.cityscope.mapper.CurrencyMapper
 import cz.matejvana.cityscope.mapper.NumberMapper
 import cz.matejvana.cityscope.screen.ExchangeRateText
+import cz.matejvana.cityscope.screen.city.getFlagEmoji
 import cz.matejvana.cityscope.viewmodels.CountryViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -103,6 +104,25 @@ fun CountryDetailScreen(
                 if (country.currencies.isNotEmpty()) {
                     ExchangeRateText(CountryCurrency(0, "", country.currencies))
                 }
+                if (country.borders.isNotEmpty()) {
+                    Text(
+                        text = stringResource(R.string.country_detail_borders),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    country.borders.forEach { borderCode ->
+                        BorderCountryListItem(borderCode = borderCode, countryViewModel = countryViewModel)
+                    }
+                }
+                Text(
+                    text = stringResource(
+                        R.string.country_detail_car_side,
+                        if (country.carSide == "right") "⬇️|\uD83D\uDE97" else "\uD83D\uDE97|⬇️",
+                        stringResource(if (country.carSide == "right") R.string.country_detail_car_side_right else R.string.country_detail_car_side_left)
+                    ),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
             }
         }
     } else {
@@ -110,6 +130,27 @@ fun CountryDetailScreen(
             text = stringResource(R.string.country_detail_not_found),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(16.dp)
+        )
+    }
+}
+
+@Composable
+fun BorderCountryListItem(borderCode: String, countryViewModel: CountryViewModel) {
+    val borderCountry = countryViewModel.getCountryByCode(borderCode)
+    if (borderCountry != null) {
+        Text(
+            text = getFlagEmoji(borderCountry.countryCode) + " " + stringResource(
+                R.string.country_detail_border_country,
+                borderCountry.nameCommon
+            ),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(bottom = 4.dp, start = 12.dp)
+        )
+    } else {
+        Text(
+            text = stringResource(R.string.country_detail_border_country_not_found, borderCode),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(bottom = 4.dp, start = 12.dp),
         )
     }
 }

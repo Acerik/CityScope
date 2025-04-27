@@ -44,6 +44,10 @@ class CountryRepository(boxStore: BoxStore, private val context: Context) {
         return countryBox.all.firstOrNull { it.cioc == code }?.id
     }
 
+    fun getCountryByCode(code: String): Country? {
+        return countryBox.all.firstOrNull { it.countryCode == code } ?: countryBox.all.firstOrNull { it.cioc == code }
+    }
+
     fun getCountriesBySearch(query: String, locale: String = getCurrentLocale(context)): List<Country> {
         return countryBox.all.filter { country ->
             country.nameOfficial.contains(query, ignoreCase = true) ||

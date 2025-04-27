@@ -19,6 +19,10 @@ class CountryViewModel(private val countryRepository: CountryRepository, private
         return countryRepository.getCountryIdByCode(code)
     }
 
+    fun getCountryByCode(code: String): Country? {
+        return countryRepository.getCountryByCode(code)
+    }
+
     fun getContext(): Context {
         return context
     }

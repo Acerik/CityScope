@@ -46,4 +46,10 @@
     <string name="city_detail_go_to_country">Go to country</string>
     <string name="country_detail_not_found">Country not found</string>
     <string name="menu_exchange_rates">Exchange rates</string>
+    <string name="country_detail_borders">Bordering countries:</string>
+    <string name="country_detail_border_country">%1$s</string>
+    <string name="country_detail_border_country_not_found">Unknown country (%1$s)</string>
+    <string name="country_detail_car_side">Car side: %s (%s)</string>
+    <string name="country_detail_car_side_right">right</string>
+    <string name="country_detail_car_side_left">left</string>
 </resources>

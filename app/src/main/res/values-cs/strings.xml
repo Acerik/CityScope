@@ -47,4 +47,10 @@
     <string name="city_detail_go_to_country">Zobrazit zemi</string>
     <string name="country_detail_not_found">Země nebyla nalezena</string>
     <string name="menu_exchange_rates">Kurzy</string>
+    <string name="country_detail_borders">Hraniční státy:</string>
+    <string name="country_detail_border_country">%1$s</string>
+    <string name="country_detail_border_country_not_found">Neznámý stát (%1$s)</string>
+    <string name="country_detail_car_side">Jízdní pruh: %s (%s)</string>
+    <string name="country_detail_car_side_right">pravý</string>
+    <string name="country_detail_car_side_left">levý</string>
 </resources>
