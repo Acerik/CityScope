@@ -46,4 +46,5 @@
     <string name="country_detail_domain">Doména: %s</string>
     <string name="city_detail_go_to_country">Zobrazit zemi</string>
     <string name="country_detail_not_found">Země nebyla nalezena</string>
+    <string name="menu_exchange_rates">Kurzy</string>
 </resources>

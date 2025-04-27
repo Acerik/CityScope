@@ -82,4 +82,7 @@ dependencies {
 
     //map osmodroid
     implementation("org.osmdroid:osmdroid-android:6.1.16")
+
+    implementation("androidx.compose.material:material-icons-extended:1.5.1")
+
 }

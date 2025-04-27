@@ -4,10 +4,7 @@ import SettingsScreen
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -54,7 +51,7 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                     MyMenuItem(
                         scope, drawerState, navController,
                         stringResource(R.string.menu_search_city),
-                        Icons.Filled.Search,
+                        Icons.Filled.LocationCity,
                         Routes.CITY_SEARCH
                     )
                     Spacer(Modifier.height(10.dp))
@@ -63,7 +60,7 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                         drawerState = drawerState,
                         navController = navController,
                         label = stringResource(R.string.menu_favourites),
-                        icon = Icons.Filled.Star,
+                        icon = Icons.Filled.FavoriteBorder,
                         route = Routes.FAVOURITE_CITIES
                     )
                     Spacer(Modifier.height(10.dp))
@@ -72,10 +69,19 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                         drawerState = drawerState,
                         navController = navController,
                         label = stringResource(R.string.menu_search_country),
-                        icon = Icons.Filled.Search,
+                        icon = Icons.Filled.Flag,
                         route = Routes.COUNTRY_SEARCH
                     )
                     Spacer(Modifier.height(10.dp))
+                    MyMenuItem(
+                        scope = scope,
+                        drawerState = drawerState,
+                        navController = navController,
+                        label = stringResource(R.string.menu_exchange_rates),
+                        icon = Icons.Default.PriceChange,
+                        route = Routes.EXCHANGE_RATES
+                    )
+                    Spacer(Modifier.weight(1f))
                     MyMenuItem(
                         scope = scope,
                         drawerState = drawerState,
@@ -178,6 +184,9 @@ fun Navigation(navController: NavHostController) {
             if (countryId != null) {
                 CountryDetailScreen(navController, countryId.toLong())
             }
+        }
+        composable(Routes.EXCHANGE_RATES) {
+            ExchangeRatesScreen(navController)
         }
     }
 }

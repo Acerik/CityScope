@@ -14,6 +14,8 @@ object Routes {
     const val FAVOURITE_CITIES = "favourite_cities"
 
     const val COUNTRY_SEARCH = "country_search"
+
+    const val EXCHANGE_RATES = "exchange_rates"
     fun getCountryDetailRoute(countryId: String): String {
         return "country_detail/$countryId"
     }

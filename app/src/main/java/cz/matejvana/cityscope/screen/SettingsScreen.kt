@@ -3,6 +3,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cz.matejvana.cityscope.R
@@ -24,7 +25,10 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
         Text(
             text = stringResource(R.string.settings_select_currency_title),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
         )
 
         Box {

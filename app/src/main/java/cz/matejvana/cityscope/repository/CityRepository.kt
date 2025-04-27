@@ -23,7 +23,7 @@ class CityRepository(boxStore: BoxStore, private val context: Context) {
     }
 
     private fun initializeData() {
-        cityBox.removeAll()
+        //cityBox.removeAll()
         if (cityBox.isEmpty) {
             val cities: List<City> = loadCitiesFromJson()
             println("Loaded ${cities.size} cities")
