@@ -25,11 +25,11 @@ fun ExchangeRateText(
     settingsViewModel: SettingsViewModel = koinViewModel()
 ) {
     val currencyExchange by currencyExchangeViewModel.currencyRates.collectAsState()
-    val preferredCurrencyCode by settingsViewModel.preferredCurrencyCode.collectAsState()
+    val preferredCurrencyCode by settingsViewModel.preferredCurrency.collectAsState()
 
     val currencyCode = countryCurrency.currencies.firstOrNull()?.code ?: "eur"
     LaunchedEffect(preferredCurrencyCode) {
-        currencyExchangeViewModel.fetchCurrencyRates(preferredCurrencyCode ?: "eur")
+        currencyExchangeViewModel.fetchCurrencyRates(preferredCurrencyCode)
     }
 
     val exchangeRate = when (currencyExchange) {
@@ -40,7 +40,7 @@ fun ExchangeRateText(
 
         else -> null
     }
-    val currentCurrencyInfo = settingsViewModel.getCurrencyInfoByCode(preferredCurrencyCode ?: "eur")
+    val currentCurrencyInfo = settingsViewModel.getCurrencyInfoByCode(preferredCurrencyCode)
     when (currencyExchange) {
         is ApiResult.Loading -> {
             Text(

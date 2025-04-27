@@ -1,26 +1,33 @@
 package cz.matejvana.cityscope.viewmodels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import cz.matejvana.cityscope.const.DefaultValues
 import cz.matejvana.cityscope.data.CurrencyInfo
 import cz.matejvana.cityscope.repository.CountryCurrencyRepository
 import cz.matejvana.cityscope.repository.SettingsRepository
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val settingsRepository: SettingsRepository,
     private val countryCurrencyRepository: CountryCurrencyRepository
 ) : ViewModel() {
-    val preferredCurrencyCode: StateFlow<String?> = settingsRepository.getPreferredCurrencyCode()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    private val _preferredCurrencyCode =
+        MutableStateFlow<String>(DefaultValues.DEFAULT_CURRENCY_CODE)
+    val preferredCurrency: StateFlow<String> = _preferredCurrencyCode
+
+    init {
+        loadPreferredCurrencyCode()
+    }
+
+    private fun loadPreferredCurrencyCode() {
+        _preferredCurrencyCode.value = settingsRepository.getPreferredCurrencyCode()
+    }
 
     fun savePreferredCurrencyCode(currencyCode: String) {
-        viewModelScope.launch {
-            settingsRepository.savePreferredCurrencyCode(currencyCode)
-        }
+        settingsRepository.savePreferredCurrencyCode(currencyCode)
+        loadPreferredCurrencyCode()
     }
 
     fun getAllCurrencyCodes() = countryCurrencyRepository.getAllCurrencyCodes()

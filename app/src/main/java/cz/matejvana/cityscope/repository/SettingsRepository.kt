@@ -1,39 +1,36 @@
 package cz.matejvana.cityscope.repository
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import cz.matejvana.cityscope.const.SettingsKeys
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
+import cz.matejvana.cityscope.const.DefaultValues
+import cz.matejvana.cityscope.data.PreferredCurrency
+import cz.matejvana.cityscope.data.PreferredCurrency_
+import io.objectbox.BoxStore
 
-class SettingsRepository(private val dataStore: DataStore<Preferences>) {
+class SettingsRepository(boxStore: BoxStore) {
+
+    private val preferredCurrencyBox = boxStore.boxFor(PreferredCurrency::class.java)
+
 
     init {
-        // Launch a coroutine to initialize the DataStore
-        kotlinx.coroutines.GlobalScope.launch {
-            initializeDataStore()
+        if (preferredCurrencyBox.isEmpty) {
+            preferredCurrencyBox.put(
+                PreferredCurrency(
+                    currencyCode = DefaultValues.DEFAULT_CURRENCY_CODE
+                )
+            )
         }
     }
 
-    private suspend fun initializeDataStore() {
-        dataStore.edit { preferences ->
-            if (preferences[SettingsKeys.PREFERRED_CURRENCY_CODE] == null) {
-                preferences[SettingsKeys.PREFERRED_CURRENCY_CODE] = "eur" // Default value
-            }
-        }
+    fun getPreferredCurrencyCode(): String {
+        val preferredCurrency = preferredCurrencyBox.query().orderDesc(PreferredCurrency_.id).build().findFirst()
+        return preferredCurrency?.currencyCode ?: DefaultValues.DEFAULT_CURRENCY_CODE
     }
 
-    fun getPreferredCurrencyCode(): Flow<String?> {
-        return dataStore.data.map { preferences ->
-            preferences[SettingsKeys.PREFERRED_CURRENCY_CODE]
-        }
-    }
-
-    suspend fun savePreferredCurrencyCode(currencyCode: String) {
-        dataStore.edit { preferences ->
-            preferences[SettingsKeys.PREFERRED_CURRENCY_CODE] = currencyCode
-        }
+    fun savePreferredCurrencyCode(currencyCode: String) {
+        println("save currency code $currencyCode")
+        preferredCurrencyBox.put(
+            PreferredCurrency(
+                currencyCode = currencyCode
+            )
+        )
     }
 }

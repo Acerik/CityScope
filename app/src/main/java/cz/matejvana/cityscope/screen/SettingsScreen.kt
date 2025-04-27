@@ -11,16 +11,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingsScreen(navController: NavController, settingsViewModel: SettingsViewModel = koinViewModel()) {
-    val preferredCurrencyCode by settingsViewModel.preferredCurrencyCode.collectAsState()
+    val preferredCurrencyCode by settingsViewModel.preferredCurrency.collectAsState()
     val allCurrencyCodes = remember { settingsViewModel.getAllCurrencyCodes() }
     var expanded by remember { mutableStateOf(false) }
-    var selectedCurrency by remember { mutableStateOf("") }
-
-    LaunchedEffect(preferredCurrencyCode) {
-        selectedCurrency = preferredCurrencyCode ?: ""
-    }
-
-    //todo need to fix saving currency code
+    var selectedCurrency by remember { mutableStateOf(preferredCurrencyCode) }
 
     Column(
         modifier = Modifier
@@ -59,12 +53,5 @@ fun SettingsScreen(navController: NavController, settingsViewModel: SettingsView
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = stringResource(R.string.settings_save_back))
-        }
     }
 }
