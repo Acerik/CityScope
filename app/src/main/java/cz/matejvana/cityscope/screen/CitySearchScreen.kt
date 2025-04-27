@@ -18,10 +18,15 @@ import androidx.navigation.NavController
 import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.data.City
 import cz.matejvana.cityscope.viewmodels.CityViewModel
+import cz.matejvana.cityscope.viewmodels.FavouriteCityViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CitySearchScreen(navController: NavController, viewModel: CityViewModel = koinViewModel()) {
+fun CitySearchScreen(
+    navController: NavController,
+    viewModel: CityViewModel = koinViewModel(),
+    favouriteCityViewModel: FavouriteCityViewModel = koinViewModel()
+) {
     var searchQuery by remember { mutableStateOf("") }
     var searchResults by remember { mutableStateOf(listOf<City>()) }
 
@@ -54,7 +59,10 @@ fun CitySearchScreen(navController: NavController, viewModel: CityViewModel = ko
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn {
             items(searchResults) { city ->
-                CityListItem(city, navController)
+                CityListItem(
+                    city,
+                    navController
+                )
             }
         }
         if (searchResults.isEmpty()) {
@@ -65,7 +73,10 @@ fun CitySearchScreen(navController: NavController, viewModel: CityViewModel = ko
             )
             LazyColumn {
                 items(viewModel.getRecentSearches()) { city ->
-                    CityListItem(city, navController)
+                    CityListItem(
+                        city,
+                        navController
+                    )
                 }
             }
         }

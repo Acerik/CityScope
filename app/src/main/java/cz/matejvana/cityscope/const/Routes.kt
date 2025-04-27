@@ -11,9 +11,11 @@ object Routes {
 
     const val MAP_SCREEN = "map_screen"
 
+    const val FAVOURITE_CITIES = "favourite_cities"
+
     fun isRouteWithDisabledMenu(route: String?): Boolean {
         if (route == null) return false
-        return isCityDetail(route) || isMap(route)
+        return isCityDetail(route) || isMap(route) || FAVOURITE_CITIES == route
     }
 
     fun getMapRoute(cityName: String, latitude: String, longitude: String): String {

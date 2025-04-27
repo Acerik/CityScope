@@ -75,9 +75,28 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:2446732854418831212",
+      "lastPropertyId": "2:7056300832231348629",
+      "name": "RecentCity",
+      "properties": [
+        {
+          "id": "1:3665106542752841992",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7056300832231348629",
+          "name": "cityId",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:818755973323857634",
+  "lastEntityId": "3:2446732854418831212",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

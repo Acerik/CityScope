@@ -7,6 +7,7 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -60,6 +61,14 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                         route = Routes.SETTINGS
                     )
                     Spacer(Modifier.height(10.dp))
+                    MyMenuItem(
+                        scope = scope,
+                        drawerState = drawerState,
+                        navController = navController,
+                        label = stringResource(R.string.menu_favourites),
+                        icon = Icons.Filled.Star,
+                        route = Routes.FAVOURITE_CITIES
+                    )
                 }
             }
         },
@@ -135,7 +144,6 @@ fun Navigation(navController: NavHostController) {
             if (cityId != null) {
                 CityDetailScreen(navController, cityId.toLong())
             }
-            //todo handle else
         }
         composable(Routes.SETTINGS) { SettingsScreen(navController) }
         composable(
@@ -145,6 +153,9 @@ fun Navigation(navController: NavHostController) {
             val latitude = it.arguments?.getString("latitude")?.toDoubleOrNull() ?: 0.0
             val longitude = it.arguments?.getString("longitude")?.toDoubleOrNull() ?: 0.0
             MapScreen(navController, cityName, latitude, longitude)
+        }
+        composable(Routes.FAVOURITE_CITIES) {
+            FavouriteCityScreen(navController)
         }
     }
 }

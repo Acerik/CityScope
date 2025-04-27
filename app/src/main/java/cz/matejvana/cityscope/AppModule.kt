@@ -7,15 +7,9 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import cz.matejvana.cityscope.api.ApiKeys
 import cz.matejvana.cityscope.api.CurrencyExchangeApi
 import cz.matejvana.cityscope.api.WeatherApi
-import cz.matejvana.cityscope.data.City
-import cz.matejvana.cityscope.data.CountryCurrency
-import cz.matejvana.cityscope.data.MyObjectBox
-import cz.matejvana.cityscope.data.RecentCity
+import cz.matejvana.cityscope.data.*
 import cz.matejvana.cityscope.repository.*
-import cz.matejvana.cityscope.viewmodels.CityViewModel
-import cz.matejvana.cityscope.viewmodels.CurrencyExchangeViewModel
-import cz.matejvana.cityscope.viewmodels.SettingsViewModel
-import cz.matejvana.cityscope.viewmodels.WeatherViewModel
+import cz.matejvana.cityscope.viewmodels.*
 import io.objectbox.BoxStore
 import okhttp3.Cache
 import okhttp3.Interceptor
@@ -39,6 +33,7 @@ val repositoryModule = module {
     single { CurrencyExchangeRepository(get()) }
     single { WeatherRepository(get()) }
     single { RecentSearchRepository(get()) }
+    single { FavouriteCityRepository(get()) }
 }
 
 val objectBoxModule = module {
@@ -51,6 +46,7 @@ val objectBoxModule = module {
     single { get<BoxStore>().boxFor(City::class.java) }
     single { get<BoxStore>().boxFor(CountryCurrency::class.java) }
     single { get<BoxStore>().boxFor(RecentCity::class.java) }
+    single { get<BoxStore>().boxFor(FavouriteCity::class.java) }
 }
 
 val viewModelModule = module {
@@ -58,6 +54,7 @@ val viewModelModule = module {
     single { SettingsViewModel(get(), get()) }
     single { CurrencyExchangeViewModel(get(), get()) }
     single { WeatherViewModel(get()) }
+    single { FavouriteCityViewModel(get(), get()) }
 }
 
 val networkModule = module {

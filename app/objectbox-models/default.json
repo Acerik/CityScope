@@ -94,9 +94,33 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:7678590477651773881",
+      "lastPropertyId": "3:2478128177490273058",
+      "name": "FavouriteCity",
+      "properties": [
+        {
+          "id": "1:8586694108024016362",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3762646755029585053",
+          "name": "cityId",
+          "type": 6
+        },
+        {
+          "id": "3:2478128177490273058",
+          "name": "timestamp",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:2446732854418831212",
+  "lastEntityId": "4:7678590477651773881",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

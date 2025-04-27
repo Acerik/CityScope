@@ -3,9 +3,11 @@ package cz.matejvana.cityscope.repository
 import cz.matejvana.cityscope.data.RecentCity
 import cz.matejvana.cityscope.data.RecentCity_
 import io.objectbox.Box
+import io.objectbox.BoxStore
 
-class RecentSearchRepository(private val recentCityBox: Box<RecentCity>) {
+class RecentSearchRepository(boxStore: BoxStore) {
 
+    val recentCityBox: Box<RecentCity> = boxStore.boxFor(RecentCity::class.java)
     val maxNumberOfRecentSearches: Int = 5
 
     fun getRecentSearches(limit: Int = maxNumberOfRecentSearches): List<RecentCity> {

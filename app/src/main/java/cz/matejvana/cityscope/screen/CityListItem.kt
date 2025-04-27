@@ -2,9 +2,16 @@ package cz.matejvana.cityscope.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -14,11 +21,23 @@ import cz.matejvana.cityscope.const.Routes
 import cz.matejvana.cityscope.data.City
 import cz.matejvana.cityscope.mapper.CityMapper
 import cz.matejvana.cityscope.viewmodels.CityViewModel
+import cz.matejvana.cityscope.viewmodels.FavouriteCityViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun CityListItem(city: City, navController: NavController, cityViewModel: CityViewModel = koinViewModel()) {
+fun CityListItem(
+    city: City,
+    navController: NavController,
+    cityViewModel: CityViewModel = koinViewModel(),
+    favouriteCityViewModel: FavouriteCityViewModel = koinViewModel(),
+    displayFavourite: Boolean = true
+) {
+
+    val favouriteCities by favouriteCityViewModel.favouriteCities.collectAsState()
+    val isCityFavourite = favouriteCities.contains(city.entityId)
+
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,10 +58,30 @@ fun CityListItem(city: City, navController: NavController, cityViewModel: CityVi
                 style = MaterialTheme.typography.bodySmall
             )
         }
-        Text(
-            text = "${getFlagEmoji(city.country)} ${city.country}",
-            style = MaterialTheme.typography.bodyLarge
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "${getFlagEmoji(city.country)} ${city.country}",
+                style = MaterialTheme.typography.bodyLarge
+            )
+            if (displayFavourite) {
+                Spacer(modifier = Modifier.width(8.dp))
+                Icon(
+                    imageVector = if (isCityFavourite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable {
+                            if (isCityFavourite) {
+                                favouriteCityViewModel.removeFavouriteCity(city.entityId)
+                            } else {
+                                favouriteCityViewModel.addFavouriteCity(city.entityId)
+                            }
+                        }
+                )
+            }
+        }
     }
 }
 
