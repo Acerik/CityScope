@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -19,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.const.Routes
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,29 +44,22 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                     )
                     HorizontalDivider()
                     Spacer(Modifier.height(10.dp))
-                    NavigationDrawerItem(
-                        label = { Text(stringResource(R.string.menu_search_city)) },
-                        icon = { Icon(Icons.Filled.Search, contentDescription = null) },
-                        selected = false,
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                            navController.navigate(Routes.CITY_SEARCH)
-                        }
+                    MyMenuItem(
+                        scope, drawerState, navController,
+                        stringResource(R.string.menu_search_city),
+                        Icons.Filled.Search,
+                        Routes.CITY_SEARCH
                     )
                     Spacer(Modifier.height(10.dp))
-                    NavigationDrawerItem(
-                        label = { Text(stringResource(R.string.menu_settings)) },
-                        icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
-                        selected = false,
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                            }
-                            navController.navigate(Routes.SETTINGS)
-                        }
+                    MyMenuItem(
+                        scope = scope,
+                        drawerState = drawerState,
+                        navController = navController,
+                        label = stringResource(R.string.menu_settings),
+                        icon = Icons.Filled.Settings,
+                        route = Routes.SETTINGS
                     )
+                    Spacer(Modifier.height(10.dp))
                 }
             }
         },
@@ -72,7 +67,7 @@ fun NavigationDrawerMenu(navController: NavHostController) {
     ) {
         Scaffold(
             topBar = {
-                if (Routes.isMap(currentRoute) || Routes.isCityDetail(currentRoute)) {
+                if (Routes.isRouteWithDisabledMenu(currentRoute)) {
                     TopAppBar(
                         title = { Text(stringResource(R.string.app_name)) },
                         navigationIcon = {
@@ -107,6 +102,28 @@ fun NavigationDrawerMenu(navController: NavHostController) {
             }
         )
     }
+}
+
+@Composable
+fun MyMenuItem(
+    scope: CoroutineScope,
+    drawerState: DrawerState,
+    navController: NavHostController,
+    label: String,
+    icon: ImageVector,
+    route: String
+) {
+    NavigationDrawerItem(
+        label = { Text(label) },
+        icon = { Icon(icon, contentDescription = null) },
+        selected = false,
+        onClick = {
+            scope.launch {
+                drawerState.close()
+            }
+            navController.navigate(route)
+        }
+    )
 }
 
 @Composable

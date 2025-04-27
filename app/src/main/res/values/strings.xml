@@ -31,4 +31,5 @@
     <string name="settings_select_currency">Choose currency</string>
     <string name="settings_select_currency_title">Select default currency</string>
     <string name="settings_save_back">Save and go back</string>
+    <string name="menu_favourites">Favourite cities</string>
 </resources>
