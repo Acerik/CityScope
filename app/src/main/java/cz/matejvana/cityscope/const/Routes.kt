@@ -15,7 +15,7 @@ object Routes {
 
     fun isRouteWithDisabledMenu(route: String?): Boolean {
         if (route == null) return false
-        return isCityDetail(route) || isMap(route) || FAVOURITE_CITIES == route
+        return isCityDetail(route) || isMap(route)
     }
 
     fun getMapRoute(cityName: String, latitude: String, longitude: String): String {

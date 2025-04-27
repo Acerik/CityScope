@@ -56,18 +56,18 @@ fun NavigationDrawerMenu(navController: NavHostController) {
                         scope = scope,
                         drawerState = drawerState,
                         navController = navController,
-                        label = stringResource(R.string.menu_settings),
-                        icon = Icons.Filled.Settings,
-                        route = Routes.SETTINGS
+                        label = stringResource(R.string.menu_favourites),
+                        icon = Icons.Filled.Star,
+                        route = Routes.FAVOURITE_CITIES
                     )
                     Spacer(Modifier.height(10.dp))
                     MyMenuItem(
                         scope = scope,
                         drawerState = drawerState,
                         navController = navController,
-                        label = stringResource(R.string.menu_favourites),
-                        icon = Icons.Filled.Star,
-                        route = Routes.FAVOURITE_CITIES
+                        label = stringResource(R.string.menu_settings),
+                        icon = Icons.Filled.Settings,
+                        route = Routes.SETTINGS
                     )
                 }
             }
