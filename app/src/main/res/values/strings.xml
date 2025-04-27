@@ -44,4 +44,5 @@
     <string name="country_detail_capital">Capital city:</string>
     <string name="country_detail_domain">Domain: %s</string>
     <string name="city_detail_go_to_country">Go to country</string>
+    <string name="country_detail_not_found">Country not found</string>
 </resources>

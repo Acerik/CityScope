@@ -107,7 +107,7 @@ fun CountryDetailScreen(
         }
     } else {
         Text(
-            text = "Stát nenalezen",
+            text = stringResource(R.string.country_detail_not_found),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(16.dp)
         )
