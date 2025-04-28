@@ -20,6 +20,7 @@ import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.const.Routes
 import cz.matejvana.cityscope.data.City
 import cz.matejvana.cityscope.mapper.CityMapper
+import cz.matejvana.cityscope.mapper.NumberMapper
 import cz.matejvana.cityscope.viewmodels.CityViewModel
 import cz.matejvana.cityscope.viewmodels.FavouriteCityViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -54,7 +55,7 @@ fun CityListItem(
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = stringResource(R.string.city_detail_population, city.population),
+                text = stringResource(R.string.city_detail_population, NumberMapper.formatWithSpaces(city.population)),
                 style = MaterialTheme.typography.bodySmall
             )
         }

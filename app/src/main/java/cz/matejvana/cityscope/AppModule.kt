@@ -12,6 +12,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -45,12 +46,12 @@ val objectBoxModule = module {
 }
 
 val viewModelModule = module {
-    single { CityViewModel(get(), get(), get()) }
-    single { SettingsViewModel(get(), get()) }
-    single { CurrencyExchangeViewModel(get(), get()) }
-    single { WeatherViewModel(get()) }
-    single { FavouriteCityViewModel(get(), get()) }
-    single { CountryViewModel(get(), get()) }
+    viewModel { CityViewModel(get(), get(), get()) }
+    viewModel { SettingsViewModel(get(), get()) }
+    viewModel { CurrencyExchangeViewModel(get(), get()) }
+    viewModel { WeatherViewModel(get()) }
+    viewModel { FavouriteCityViewModel(get(), get()) }
+    viewModel { CountryViewModel(get(), get()) }
 }
 
 val networkModule = module {

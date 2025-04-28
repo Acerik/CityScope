@@ -52,4 +52,5 @@
     <string name="country_detail_car_side">Car side: %s (%s)</string>
     <string name="country_detail_car_side_right">right</string>
     <string name="country_detail_car_side_left">left</string>
+    <string name="city_detail_country">Country: %s</string>
 </resources>

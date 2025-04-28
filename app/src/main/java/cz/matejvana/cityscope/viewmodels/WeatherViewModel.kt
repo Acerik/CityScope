@@ -17,8 +17,17 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
 
     fun getWeather(cityName: String) {
         viewModelScope.launch {
-            _weather.value = ApiResult.Loading
-            _weather.value = weatherRepository.getWeather(cityName)
+            _weather.value = ApiResult.Loading // Reset stavu
+            try {
+                val result = weatherRepository.getWeather(cityName)
+                if (result is ApiResult.Success) {
+                    _weather.value = ApiResult.Success(result.data)
+                } else if (result is ApiResult.Error) {
+                    _weather.value = ApiResult.Error(result.message)
+                }
+            } catch (e: Exception) {
+                _weather.value = ApiResult.Error(e.message ?: "Unknown error")
+            }
         }
     }
 }

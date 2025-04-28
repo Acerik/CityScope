@@ -19,6 +19,7 @@ import cz.matejvana.cityscope.R
 import cz.matejvana.cityscope.api.ApiResult
 import cz.matejvana.cityscope.const.Routes
 import cz.matejvana.cityscope.mapper.CurrencyMapper
+import cz.matejvana.cityscope.mapper.NumberMapper
 import cz.matejvana.cityscope.screen.ExchangeRateText
 import cz.matejvana.cityscope.viewmodels.CityViewModel
 import cz.matejvana.cityscope.viewmodels.CountryViewModel
@@ -36,18 +37,17 @@ fun CityDetailScreen(
     countryViewModel: CountryViewModel = koinViewModel(),
     weatherViewModel: WeatherViewModel = koinViewModel()
 ) {
-
-    val city by remember { mutableStateOf(cityViewModel.getCityById(cityId)) }
+    val weather by weatherViewModel.weather.collectAsState()
+    val city = cityViewModel.getCityById(cityId)
     val countryCurrency by remember { mutableStateOf(cityViewModel.getCurrencyByCity(city!!)) }
 
-
-    LaunchedEffect(city) {
-        weatherViewModel.getWeather(city!!.name)
+    LaunchedEffect(cityId) {
+        city?.let {
+            weatherViewModel.getWeather(it.name)
+        }
     }
 
     if (city != null) {
-        val weather = weatherViewModel.weather.collectAsState().value
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -62,12 +62,15 @@ fun CityDetailScreen(
             )
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Country: ${city?.country}",
+                    text = stringResource(R.string.city_detail_country, "${city?.country}"),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
                 Text(
-                    text = stringResource(R.string.city_detail_population, "${city?.population}"),
+                    text = stringResource(
+                        R.string.city_detail_population,
+                        NumberMapper.formatWithSpaces(city?.population.toString())
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
@@ -107,7 +110,7 @@ fun CityDetailScreen(
             }
             when (weather) {
                 is ApiResult.Success -> {
-                    val weatherData = weather.data
+                    val weatherData = (weather as ApiResult.Success).data
                     Text(
                         text = stringResource(R.string.city_detail_current_weather),
                         style = MaterialTheme.typography.headlineSmall,
